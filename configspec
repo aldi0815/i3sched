@@ -1,0 +1,31 @@
+# i3sched config
+
+# seconds between to scheduling actions
+sleepTime = integer(min=1,default=30)
+shutdownTimeout = integer(min=1,default=180)
+
+[OneRPC]
+# hostname to connect to the one daemon
+hostname = string(default="localhost")
+# port to connect to the one daemon
+port = integer(1, 65535, default=2633)
+# vm number start range
+startVM = integer(default=1)
+
+[SGE]
+# qsub program
+qsub = string(default="qsub")
+# qstat program
+qstat = string(default="qstat")
+# qdel program
+qdel = string(default="qdel")
+# qhost program
+qhost = string(default="qhost")
+# idleCmd submitted with qsub
+idleCmd = string(default="echo '/bin/sleep 3144960000'")
+# parallelEnviroment to use
+parallelEnvironment = string(default="shm")
+# queue to use
+queue = string(default="whistler.long.q")
+# suffix for hostnames
+hostSuffix = string(default=".informatik.uni-erlangen.de")

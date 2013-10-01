@@ -1,0 +1,65 @@
+#!/usr/bin/python2.7
+
+# This file is used to start the scheduler
+
+import sys
+import os
+
+import argparse
+
+try:
+    from scheduler import Scheduler
+except ImportError:
+    print "scheduler.py not found"
+    sys.exit(1)
+
+def version():
+    print "i3sched 1.0"
+    print "i3sched was written for OpenNebula 3.4 (http://opennebula.org/documentation:rel3.4)"
+    print "Thanks to the people behind haizea (http://haizea.cs.uchicago.edu/)\nand configobj (http://www.voidspace.org.uk/python/configobj.html)"
+    print "\nBernd Kaiser (2012)"
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="i3sched", description="Scheduler who communicates between the Sun Grid Engine and OpenNebula")
+    parser.add_argument("-c", "--create-config", 
+            dest="createConfig", action="store_true", help="create a i3sched with the dafault values and exist")
+    parser.add_argument("-v", "--version", 
+            dest="version", action="store_true", help="print version information and exist")
+    args = parser.parse_args()
+    if args.createConfig:
+        try:
+            filename = Scheduler.createConfig()
+            print "Config written to '%s'" % filename
+        except Exception, err:
+            print "Config creation failed: %s" % err
+        finally:
+            sys.exit(0)
+    if args.version:
+        version()
+        sys.exit(0)
+    
+    """try:
+        # set working directory to file directory (configspec) 
+        abspath = os.path.abspath(__file__)
+        dname = os.path.dirname(abspath)
+        os.chdir(dname)
+        
+        # Scheduler
+        sched = Scheduler()
+        sched.run()
+        
+        # Scheduler is done
+        sys.exit(0)
+    except Exception, error:
+        sys.stderr.write(str(error) + "\n")
+        sys.exit(1)"""
+
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+    sched = Scheduler()
+    sched.run()
+    sys.exit(0)
+
+
+# vim:syntax=python filetype=python
